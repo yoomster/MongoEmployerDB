@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,11 @@ namespace DataAccessLibrary.Models
 {
     public class PersonModel
     {
+        [BsonId]
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public AddressModel Addresses { get; set; } 
-        public EmployerModel Employers { get; set; }
+        public List<AddressModel> Addresses { get; set; } = new List<AddressModel>();
+        public List<EmployerModel> Employers { get; set; } = new List<EmployerModel>();
     }
 }
