@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using MongoDBDataAccess;
+﻿using DataAccessLibrary;
+using Microsoft.Extensions.Configuration;
+
 
 
 namespace MongoEmployerDB
@@ -9,7 +10,7 @@ namespace MongoEmployerDB
         private static MongoDBDataAccess db;
         static void Main(string[] args)
         {
-
+            db = new MongoDBDataAccess("",GetConnectionString());
         }
         private static string GetConnectionString(string connectionStringName = "Default")
         {

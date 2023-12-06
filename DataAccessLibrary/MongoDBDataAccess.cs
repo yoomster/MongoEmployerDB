@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,19 @@ namespace DataAccessLibrary
             //connect to specified db, on specified MongoDB server
             db = client.GetDatabase(dbName);
         }
+
+        public void InsertRecord<T>(string table, T record)
+        {
+            var collection = db.GetCollection<T>(table);
+            collection.InsertOne(record);
+        }
+
+        public List<T> LoadAllRecords<T>(string table)
+        {
+            var collection = db.GetCollection<T>(table);
+            return collection.Find(new BsonDocument()).ToList();
+        }
+
+
     }
 }
