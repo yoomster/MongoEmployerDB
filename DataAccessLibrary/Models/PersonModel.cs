@@ -11,6 +11,7 @@ namespace DataAccessLibrary.Models
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public AddressModel Addresses { get; set; }
+        public AddressModel Addresses { get; set; } 
+        public EmployerModel Employers { get; set; }
     }
 }
