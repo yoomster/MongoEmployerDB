@@ -10,7 +10,7 @@ namespace DataAccessLibrary.Models
     public class PersonModel
     {
         [BsonId]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<AddressModel> Addresses { get; set; } = new List<AddressModel>();
