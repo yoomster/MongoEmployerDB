@@ -1,6 +1,7 @@
 ﻿using DataAccessLibrary;
 using DataAccessLibrary.Models;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Reflection.Metadata;
 
 
@@ -29,25 +30,54 @@ namespace MongoEmployerDB
             person.Employers.Add(new EmployerModel {CompanyName ="Rabobank", JobTitle ="Adviseur" });
             person.Employers.Add(new EmployerModel { CompanyName = "Van Lanschot", JobTitle = "Adviseur" });
 
-            //CreatePerson(person);.
+            //CreatePerson(person);
+            //GetAllPeople();
 
-            GetPersonById("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97");
-            GetAllPeople();
 
+            //GetPersonById("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97");
             //AA: 00000000-0000-0000-0000-000000000000
             //NP: 639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97
 
+            //UpdatePersonName("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97", "LASTNAME", "Peer");
 
             Console.WriteLine("MongoDB procesed");
             Console.ReadLine();
         }
+
+        private static void DeletePerson(string id)
+        {
+            Guid guid = new Guid(id);
+            var person = db.LoadRecordById<PersonModel>(tableName, guid);
+
+
+
+        }
+
+        private static void UpdatePersonName(string id, string changingProperty, string updatedInfo)
+        {
+            Guid guid = new Guid(id);
+            var person = db.LoadRecordById<PersonModel>(tableName, guid);
+
+            if (changingProperty.ToLower() == "firstname")
+            {
+                person.FirstName = updatedInfo;
+            }
+            else if (changingProperty.ToLower() == "lastname")
+            {
+                person.LastName = updatedInfo;
+            }
+
+            db.UpsertRecord(tableName, person.Id, person);
+
+        }
+
+
         private static void GetPersonById(string id)
         {
             Guid guid = new Guid(id);
             var person = db.LoadRecordById<PersonModel>(tableName, guid);
 
             Console.WriteLine($"{person.Id}:{person.FirstName} {person.LastName}");
-
         }
 
         private static void GetAllPeople()
