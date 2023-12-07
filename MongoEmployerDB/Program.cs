@@ -29,8 +29,9 @@ namespace MongoEmployerDB
             person.Employers.Add(new EmployerModel {CompanyName ="Rabobank", JobTitle ="Adviseur" });
             person.Employers.Add(new EmployerModel { CompanyName = "Van Lanschot", JobTitle = "Adviseur" });
 
-            CreatePerson(person);
+            //CreatePerson(person);.
 
+            GetPersonById("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97");
             GetAllPeople();
 
             //AA: 00000000-0000-0000-0000-000000000000
@@ -39,6 +40,14 @@ namespace MongoEmployerDB
 
             Console.WriteLine("MongoDB procesed");
             Console.ReadLine();
+        }
+        private static void GetPersonById(string id)
+        {
+            Guid guid = new Guid(id);
+            var person = db.LoadRecordById<PersonModel>(tableName, guid);
+
+            Console.WriteLine($"{person.Id}:{person.FirstName} {person.LastName}");
+
         }
 
         private static void GetAllPeople()
