@@ -42,10 +42,17 @@ namespace MongoEmployerDB
 
             RemoveCompanyFromUser("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97", "Rabobank");
 
+            RemovePerson("00000000-0000-0000-0000-000000000000");
+
             Console.WriteLine("MongoDB procesed");
             Console.ReadLine();
         }
 
+        private static void RemovePerson(string id)
+        {
+            Guid guid = new Guid(id);
+            db.DeleteRecord<PersonModel>(tableName, guid);
+        }
 
         private static void RemoveCompanyFromUser(string id, string employer)
         {
