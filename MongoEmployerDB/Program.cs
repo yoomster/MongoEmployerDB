@@ -36,13 +36,13 @@ namespace MongoEmployerDB
 
             //GetPersonById("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97");
             //AA: 00000000-0000-0000-0000-000000000000
-            //NP: 639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97
+            //NP: cfa8309b-a1c9-4946-9ba1-a2da3e163ab2
 
-            //UpdatePersonName("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97", "LASTNAME", "Peer");
+            //UpdatePersonName("cfa8309b-a1c9-4946-9ba1-a2da3e163ab2", "LASTNAME", "Peer");
 
-            RemoveCompanyFromUser("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97", "Rabobank");
+            RemoveCompanyFromUser("cfa8309b-a1c9-4946-9ba1-a2da3e163ab2", "Rabobank");
 
-            RemovePerson("00000000-0000-0000-0000-000000000000");
+            RemovePerson("0a72184d-e15d-42fe-85d7-13c94fca0cd2");
 
             Console.WriteLine("MongoDB procesed");
             Console.ReadLine();
