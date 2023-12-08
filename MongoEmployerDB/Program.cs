@@ -27,8 +27,8 @@ namespace MongoEmployerDB
             person.Addresses.Add(new AddressModel { AddressName = "Hop", HouseNumber = "3", Zipcode = "5616NG", City = "Ehv", Country = "NL" });
 
 
-            person.Employers.Add(new EmployerModel {CompanyName ="Rabobank", JobTitle ="Adviseur" });
-            person.Employers.Add(new EmployerModel { CompanyName = "Van Lanschot", JobTitle = "Adviseur" });
+            person.Employers.Add(new EmployerModel {Employer ="Rabobank", JobTitle ="Adviseur" });
+            person.Employers.Add(new EmployerModel { Employer = "Van Lanschot", JobTitle = "Adviseur" });
 
             //CreatePerson(person);
             //GetAllPeople();
@@ -40,17 +40,21 @@ namespace MongoEmployerDB
 
             //UpdatePersonName("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97", "LASTNAME", "Peer");
 
+            RemoveCompanyFromUser("639ee377-4d10-4dc4-bc4b-3ad1f6ebcb97", "Rabobank");
+
             Console.WriteLine("MongoDB procesed");
             Console.ReadLine();
         }
 
-        private static void DeletePerson(string id)
+
+        private static void RemoveCompanyFromUser(string id, string employer)
         {
             Guid guid = new Guid(id);
             var person = db.LoadRecordById<PersonModel>(tableName, guid);
 
+            person.Employers = person.Employers.Where(x => x.Employer != employer).ToList();
 
-
+            db.UpsertRecord(tableName, person.Id, person);
         }
 
         private static void UpdatePersonName(string id, string changingProperty, string updatedInfo)
