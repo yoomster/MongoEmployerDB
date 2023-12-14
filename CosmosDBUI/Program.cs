@@ -45,9 +45,9 @@ namespace CosmosDBUI
         {
         }
 
-        private static string GetConnectionString(string connectionStringName = "Default")
+        private static (string endpointUrl, string primaryKey, string databaseName, string containerName) GetCosmosInfo()
         {
-            string output = "";
+            (string endpointUrl, string primaryKey, string databaseName, string containerName) output;
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -55,7 +55,10 @@ namespace CosmosDBUI
 
             var config = builder.Build();
 
-            output = config.GetConnectionString(connectionStringName);
+            output.endpointUrl = config.GetValue<string>("CosmosDB:EndpointUrl");
+            output.primaryKey = config.GetValue<string>("CosmosDB:PrimaryKey");
+            output.databaseName = config.GetValue<string>("CosmosDB:DatabaseName");
+            output.containerName = config.GetValue<string>("CosmosDB:ContainerName");
 
             return output;
         }
