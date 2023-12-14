@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,21 +38,52 @@ namespace DataAccessLibrary
 
         public async Task<List<T>> LoadAllRecordsAsync<T>()
         {
-            
+            string sql = "select * from p";
+
+            QueryDefinition queryDefinition = new QueryDefinition(sql);
+            FeedIterator<T> feedIterator = _container.GetItemQueryIterator<T>(queryDefinition);
+
+            List<T> output = new List<T>();
+
+            while (feedIterator.HasMoreResults)
+            {
+                FeedResponse<T> currentResultSet = await feedIterator.ReadNextAsync();
+
+                foreach (var item in currentResultSet)
+                {
+                    output.Add(item);
+                }
+            }
+            return  output;
         }
         public async Task<T> LoadRecordByIdAsync<T>(string id)
         {
-            
+            string sql = "select * from p where p.id = @Id";
+
+            QueryDefinition queryDefinition = new QueryDefinition(sql);
+            FeedIterator<T> feedIterator = _container.GetItemQueryIterator<T>(queryDefinition);
+
+            while (feedIterator.HasMoreResults)
+            {
+                FeedResponse<T> currentResultSet = await feedIterator.ReadNextAsync();
+
+                foreach (var item in currentResultSet)
+                {
+                    return item;
+                }
+            }
+
+            throw new Exception("Item not found");
         }
 
         public async Task UpsertRecordAsync<T>(T record)
         {
-
+            await _container.UpsertItemAsync(record);
         }
 
-        public async Task DeleteRecordAsync<T>(string id)
+        public async Task DeleteRecordAsync<T>(string id, string partitionKey)
         {
-
+            await _container.DeleteItemAsync<T>(id, new PartitionKey(partitionKey));
         }
     }
 }
