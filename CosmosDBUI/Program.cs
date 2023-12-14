@@ -8,6 +8,8 @@ namespace CosmosDBUI
         static void Main(string[] args)
         {
 
+
+
             Console.WriteLine("CosmosDB procesed");
             Console.ReadLine();
         }
